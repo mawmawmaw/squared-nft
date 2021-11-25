@@ -208,7 +208,27 @@ input#mint__mintAmount {
   button.ant-btn.ant-dropdown-trigger span:first-of-type {
       display: none;
   }
-  .auth-button{
+  .auth-button {
     font-size: 10px;
+  }
+  p.header-address {
+      font-size: 8px;
+  }
+  .minter-wrapper {
+      width: 90vw !important;
+      flex-direction: column;
+  }
+  .minter-wrapper > div {
+    width: 100% !important;
+  }
+  .ant-card-head-title p {
+      font-size: 10px;
+  }
+  .how-to-container {
+      width: 90vw !important;
+  }
+  .ant-col.ant-col-8.gutter-row {
+      flex: 0 0 100%;
+      max-width: 100%;
   }
 }

@@ -56,7 +56,7 @@ export default function Contract() {
   },[Moralis.User])
 
   return (
-    <div style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
+    <div className="minter-wrapper" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
       <Card
         title={
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>

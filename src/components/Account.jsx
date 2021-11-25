@@ -43,7 +43,7 @@ function Account() {
   return (
     <>
       <div style={styles.account} onClick={() => setIsModalVisible(true)}>
-        <p style={{ marginRight: "5px", ...styles.text }}>
+        <p className="header-address" style={{ marginRight: "5px", ...styles.text }}>
           {getEllipsisTxt(walletAddress, 6)}
         </p>
         <Blockie currentWallet scale={3} />
