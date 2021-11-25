@@ -62,8 +62,21 @@ textarea,
 select {
   font: inherit;
 }
+.app-wrapper{
+  animation: bgSlide 180s linear 0s infinite;
+}
+@keyframes bgSlide {
+  0%{
+    background-position-x: 0%;
+    background-position-y: 0%;
+  }
+  100%{
+    background-position-x: 100%;
+    background-position-y: 5%;
+  }
+}
 header.ant-layout-header {
-  background-color: #ffffffdd;
+  background-color: #ffffffdd !important;
 }
 .ant-menu {
   background-color: transparent;
@@ -78,10 +91,17 @@ header.ant-layout-header {
 }
 .home h1{
   color: #ffffffcc;
-  text-transform: uppercase;
   font-size: 10vw;
   font-weight: bold;
   text-shadow: 2px 2px #00000066;
+  text-transform: uppercase;
+}
+.home h2.subtitle {
+  margin-top: -60px;
+  margin-bottom: 40px;
+  color: #ffffffcc;
+  font-size: 2vw;
+  text-shadow: 1.2px 1.2px #00000066;
 }
 .home .ant-btn {
   width: 240px;
@@ -95,11 +115,20 @@ header.ant-layout-header {
 .ant-card {
   background: #ffffffdd !important;
 }
+.ant-card-head-title {
+  font-size: 26px;
+}
+.ant-card-head-title .address {
+  font-size: 14px;
+}
 .ant-col.ant-col-8 {
   padding: 10px;
 }
 .ant-card-cover {
   padding-top: 20px;
+}
+.amount-minted h4 {
+  text-align: right;
 }
 label.ant-form-item-required {
   font-size: 21px;
@@ -107,6 +136,27 @@ label.ant-form-item-required {
   color: #262626;
   width: 100%;
   font-family: Roboto, sans-serif;
+}
+.wrong-network {
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #ff000099;
+  color: white;
+  border-radius: 4px;
+  animation: pulse 1s ease-in-out 0s infinite forwards;
+}
+
+@keyframes pulse {
+  0%{
+    transform: scale(1);
+  }
+  50%{
+    transform: scale(1.01);
+  }
+  100%{
+    transform: scale(1);
+  }
 }
 .minting-inputs{
   display: flex;

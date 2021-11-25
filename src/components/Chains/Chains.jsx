@@ -23,11 +23,6 @@ const styles = {
 
 const menuItems = [
   {
-    key: "0x1",
-    value: "Ethereum",
-    icon: <ETHLogo />,
-  },
-  {
     key: "0x4",
     value: "Rinkeby Testnet",
     icon: <ETHLogo />,
@@ -41,7 +36,7 @@ function Chains() {
 
   useEffect(() => {
     if (!chainId) return null;
-    const newSelected = menuItems.find((item) => item.key === chainId);
+    const newSelected = menuItems.find((item) => item.key == 4);
     setSelected(newSelected);
     //console.log("current chainId: ", chainId);
   }, [chainId]);

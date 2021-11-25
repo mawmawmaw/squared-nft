@@ -33,7 +33,7 @@ function Account() {
     return (
       <div
         style={styles.account}
-        onClick={() => authenticate({ signingMessage: "Hello World!" })}
+        onClick={() => authenticate({ signingMessage: "Welcome to Squared NFTs!" })}
       >
         <p className="auth-button" style={styles.text}>Authenticate</p>
       </div>

@@ -1,18 +1,24 @@
+import { useMoralisDapp } from "providers/MoralisDappProvider/MoralisDappProvider";
 import { Button, Card, Input, Form, notification } from "antd";
 import { useState, useEffect } from "react";
 import contractInfo from "contracts/SquaredNFT_abi.json";
 import Address from "components/Address/Address";
 import { useMoralis } from "react-moralis";
 
-export default function Contract() {
+export default function Contract(props) {
+  const { isAuthenticated } = props;
   const { Moralis } = useMoralis();
+  const { walletAddress, chainId } = useMoralisDapp();
   const { abi } = contractInfo;
   const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A";
+  const [amountMinted, setAmountMinted] = useState(0);
+  const [totalSupply, setTotalSupply] = useState(0);
   const [userAddress, setUserAddress] = useState("");
   const [txId, setTxId] = useState("");
   const [responses, setResponses] = useState({});
   const [mintSuccess, setMintSuccess] = useState(false);
   const [mintError, setMintError] = useState(false);
+  const [mintErrorMsg, setMintErrorMsg] = useState("");
   const [mintOn, setMintOn] = useState(false);
 
   const renderedResult = () => {
@@ -36,7 +42,11 @@ export default function Contract() {
       return <div className="mintError">
         <svg aria-hidden="true" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" width="100"><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
         <h2>Oops... Something went wrong!</h2>
+        <p>{mintErrorMsg}</p>
       </div>
+    }
+    else{
+      return <>No transactions yet.</>;
     }
   }
 
@@ -51,9 +61,31 @@ export default function Contract() {
     });
   };
 
+  
   useEffect(()=>{
-    setUserAddress(Moralis.User.current().get('ethAddress'))
-  },[Moralis.User])
+    if(isAuthenticated){
+      const options1 = {
+        contractAddress,
+        functionName: 'totalSupply',
+        abi,
+      };
+      Moralis.executeFunction(options1).then((response) =>{
+        setAmountMinted(response);
+      });
+      const options2 = {
+        contractAddress,
+        functionName: 'maxSupply',
+        abi,
+      };
+      Moralis.executeFunction(options2).then((response) =>{
+        setTotalSupply(response);
+      });
+    }
+  });
+
+  useEffect(()=>{
+    setUserAddress(walletAddress);
+  },[walletAddress])
 
   return (
     <div className="minter-wrapper" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
@@ -72,6 +104,8 @@ export default function Contract() {
           borderRadius: "0.5rem",
         }}
       >
+        {chainId==4 || <div className="wrong-network">To be able to mint, please connect to <strong>Rinkeby Testnet</strong>.</div>}
+        <div className="amount-minted"><h4>NFTs minted so far: {amountMinted + ' / ' + totalSupply}</h4></div>
         <Form.Provider
           onFormFinish={async (name, { forms }) => {
             setMintOn(true);
@@ -98,14 +132,14 @@ export default function Contract() {
               tx.on("transactionHash", (hash) => {
                 setResponses({ ...responses, [name]: { result: null, isLoading: true } });
                 openNotification({
-                  message: "🔊 New Transaction",
+                  message: "Transaction Sent",
                   description: `${hash}`,
                 });
               })
                 .on("receipt", (receipt) => {
                   setResponses({ ...responses, [name]: { result: null, isLoading: false } });
                   openNotification({
-                    message: "📃 New Receipt",
+                    message: "Transaction Confirmed",
                     description: `${receipt.transactionHash}`,
                   });
                   setTxId(receipt.transactionHash);
@@ -113,7 +147,11 @@ export default function Contract() {
                   setMintSuccess(true);
                 })
                 .on("error", (error) => {
-                  console.log(error);
+                  setMintErrorMsg(error.message);
+                  openNotification({
+                    message: "Transaction Error",
+                    description: `${error.message}`,
+                  });
                   setMintOn(false);
                   setMintSuccess(false);
                   setMintError(true);
@@ -127,9 +165,11 @@ export default function Contract() {
           >
             <Form layout="vertical" name="mint">
               <h2>Your Address</h2>
-              <Address avatar="left" copyable address={userAddress} size={8} />
+              <small>(this is where the NFT will be sent)</small>
+              <Address avatar="left" copyable size={8} />
               <br/>
-              <h2>How many NFTs would you like? (max. 10)</h2>
+              <h2>How many NFTs would you like? </h2>
+              <small>(Cost 0.05ETH each, Max. 10 per transaction)</small>
               <div className="minting-inputs">
                 <Form.Item
                   label=""
@@ -137,7 +177,7 @@ export default function Contract() {
                   required
                   style={{ marginTop: "25px", marginBottom: "15px" }}
                 >
-                  <Input type="number" min="1" max="10" />
+                  <Input type="number" value="1" min="1" max="10" />
                 </Form.Item>
                 <Form.Item style={{ marginBottom: "5px" }}>
                   <Button
@@ -145,8 +185,9 @@ export default function Contract() {
                     size="large"
                     htmlType="submit"
                     loading={responses["mint"]?.isLoading}
+                    disabled={!mintOn&&chainId==4?false:true}
                   >
-                    {mintOn ? "Wait a moment..." : "MINT"}
+                    {mintOn ? "Minting..." : "MINT"}
                   </Button>
                 </Form.Item>
               </div>

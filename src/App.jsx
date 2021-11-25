@@ -102,6 +102,7 @@ const App = () => {
             <Route path="/" exact>
               <div className="home">
                 <h1>Squared NFT</h1>
+                <h2 className="subtitle">NFT Puzzle Game</h2>
                 <Button
                   type="primary"
                   size="large"
@@ -119,7 +120,7 @@ const App = () => {
             </Route>
             <Route path="/mint">
               {isAuthenticated || <Redirect to="/" /> }
-              <Contract />
+              <Contract isAuthenticated={isAuthenticated}/>
             </Route>
             <Route path="/how-to">
               <div className="how-to-container" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
@@ -160,7 +161,6 @@ const App = () => {
               <>Please login using the "Authenticate" button</>
             </Route>
           </Switch>
-          <Redirect to="/" />
         </div>
       </Router>
     </Layout>
