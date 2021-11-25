@@ -195,6 +195,9 @@ input#mint__mintAmount {
       justify-content: center !important;
       align-items: center !important;
   }
+  .logo-container{
+    width: "60px";
+  }
   ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light {
     width: 32% !important;
     margin-left: 0px !important;
