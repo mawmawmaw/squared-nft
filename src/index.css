@@ -192,14 +192,23 @@ input#mint__mintAmount {
   header.ant-layout-header {
       flex-wrap: wrap;
       flex-direction: column;
+      justify-content: center;
+      align-items: center;
   }
   ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light {
-      width: 38%;
+    width: 38% !important;
+    margin-left: 0px !important;
   }
   li.ant-menu-overflow-item.ant-menu-overflow-item-rest.ant-menu-submenu.ant-menu-submenu-horizontal {
       padding-left: 0;
   }
   .ant-menu-item a {
       font-size: 12px;
+  }
+  button.ant-btn.ant-dropdown-trigger span:first-of-type {
+      display: none;
+  }
+  .auth-button{
+    font-size: 10px;
   }
 }

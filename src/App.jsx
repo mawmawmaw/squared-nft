@@ -168,7 +168,7 @@ const App = () => {
 };
 
 export const Logo = () => (
-  <div style={{ display: "flex" }}>
+  <div style={{ display: "flex", width: "60px" }}>
     <img src={headerLogo} alt="Logo" />
   </div>
 );

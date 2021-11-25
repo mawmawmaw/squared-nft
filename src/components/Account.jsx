@@ -35,7 +35,7 @@ function Account() {
         style={styles.account}
         onClick={() => authenticate({ signingMessage: "Hello World!" })}
       >
-        <p style={styles.text}>Authenticate</p>
+        <p className="auth-button" style={styles.text}>Authenticate</p>
       </div>
     );
   }
