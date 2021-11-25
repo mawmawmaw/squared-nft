@@ -75,7 +75,7 @@ const App = () => {
               width: "100%",
               marginLeft: "100px",
             }}
-            defaultSelectedKeys={["quickstart"]}
+            defaultSelectedKeys={["home"]}
           >
 
             <Menu.Item key="home">
@@ -87,12 +87,10 @@ const App = () => {
             <Menu.Item key="how">
               <NavLink to="/how-to">How to Mint</NavLink>
             </Menu.Item>
-            
             <Menu.Item key="collection">
               <a href="https://testnets.opensea.io/collection/squarednft-6pfakr9a0f" target="_blank" rel="noreferrer">Collection</a>
             </Menu.Item>
 
-            
           </Menu>
           <div style={styles.headerRight}>
             <Chains />
