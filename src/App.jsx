@@ -131,7 +131,7 @@ const App = () => {
                     <Col span={8}>
                       <Card bordered={false} cover={<img alt="metamask" src={metamask} />}>
                         <Meta title="1. Install Metamask" />
-                        <p>If you don't have <a href="https://metamask.io/" target="_blank" rel="noreferrer">Metamask</a> installed, first <a href="https://metamask.io/" target="_blank">download it</a> and create an account. Be sure to keep your keys safe!</p>
+                        <p>If you don't have <a href="https://metamask.io/" target="_blank" rel="noreferrer">Metamask</a> installed, first <a href="https://metamask.io/" target="_blank" rel="noreferrer">download it</a> and create an account. Be sure to keep your keys safe!</p>
                       </Card>
                     </Col>
                     <Col span={8}>
