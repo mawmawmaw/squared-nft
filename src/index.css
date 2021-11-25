@@ -196,7 +196,7 @@ input#mint__mintAmount {
       align-items: center !important;
   }
   .logo-container{
-    width: "60px";
+    width: 60px;
   }
   ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light {
     width: 32% !important;
