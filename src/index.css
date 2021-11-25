@@ -1,0 +1,140 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+ul[class],
+ol[class] {
+  padding: 0;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+ul[class],
+ol[class],
+li,
+figure,
+figcaption,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+body {
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+  background-color: white;
+}
+
+ul[class],
+ol[class] {
+  list-style: none;
+}
+
+a:not([class]) {
+  text-decoration-skip-ink: auto;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+article > * + * {
+  margin-top: 1em;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+.home {
+  text-align: center;
+  height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.home h1{
+  color: #ffffffcc;
+  text-transform: uppercase;
+  font-size: 10vw;
+  font-weight: bold;
+  text-shadow: 2px 2px #00000066;
+}
+.home .ant-btn {
+  width: 240px;
+  height: 60px;
+  margin: 10px;
+  box-shadow: 2px 2px 10px 2px #3c3c3c;
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.successfulMint{
+  text-align: center;
+  animation: bounce 0.5s ease-in-out 0s 1 forwards;
+}
+.successfulMint svg path{
+  fill: #27ab07;
+}
+
+.mintError{
+  text-align: center;
+  animation: bounce 0.5s ease-in-out 0s 1 forwards;
+}
+.mintError svg path{
+  fill: #b50505;
+}
+
+@keyframes bounce {
+  0%{
+    transform: scale(0);
+  }
+  70%{
+    transform: scale(1.2);
+  }
+  100%{
+    transform: scale(1);
+  }
+}
+
+.mintLoading{
+  text-align: center;
+  animation: minting 2s linear 0s infinite;
+}
+.mintLoading svg path{
+  fill: #0b43bd;
+}
+@keyframes minting {
+  0%{
+    transform: rotate(0deg);
+  }
+  100%{
+    transform: rotate(360deg);
+  }
+}
+.ant-card-meta {
+  margin-bottom: 10px;
+}
+.ant-card-meta-detail{
+  text-align: center;
+}
+.ant-card-cover img {
+  height: 100px;
+  width: auto;
+  margin: 0 auto;
+}
