@@ -8,10 +8,10 @@ import {
   Redirect,
 } from "react-router-dom";
 import { Button, Card, Row, Col } from "antd";
-import headerLogo from './logo.png';
-import metamask from './metamask.png';
-import ethereum from './ethereum.png';
-import authenticate from './authenticate.png';
+import headerLogo from './assets/logo.png';
+import metamask from './assets/metamask.png';
+import ethereum from './assets/ethereum.png';
+import authenticate from './assets/authenticate.png';
 import Account from "components/Account";
 import Chains from "components/Chains";
 import { Menu, Layout } from "antd";
@@ -81,12 +81,18 @@ const App = () => {
             <Menu.Item key="home">
               <NavLink to="/">Home</NavLink>
             </Menu.Item>
-            <Menu.Item key="mint">
+            <Menu.Item key="mint" disabled={isAuthenticated ? false : true}>
               <NavLink to="/mint">Mint NFT</NavLink>
             </Menu.Item>
             <Menu.Item key="how">
               <NavLink to="/how-to">How to Mint</NavLink>
             </Menu.Item>
+            
+            <Menu.Item key="collection">
+              <a href="https://testnets.opensea.io/collection/squarednft-6pfakr9a0f" target="_blank" rel="noreferrer">Collection</a>
+            </Menu.Item>
+
+            
           </Menu>
           <div style={styles.headerRight}>
             <Chains />
@@ -101,6 +107,7 @@ const App = () => {
                 <Button
                   type="primary"
                   size="large"
+                  disabled={isAuthenticated ? false : true}
                 >
                   <NavLink to="/mint">Mint a NFT</NavLink>
                 </Button>
@@ -113,6 +120,7 @@ const App = () => {
               </div>
             </Route>
             <Route path="/mint">
+              {isAuthenticated || <Redirect to="/" /> }
               <Contract />
             </Route>
             <Route path="/how-to">

@@ -25,12 +25,17 @@ export default function Contract() {
       return <div className="successfulMint">
         <svg aria-hidden="true" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>
         <br/>
-        <a href={`https://rinkeby.etherscan.io/tx/${txId}`} target="_blank" rel="noreferrer">See Transaction</a>
+        <h2>Successful!</h2>
+        <a href={`https://rinkeby.etherscan.io/tx/${txId}`} target="_blank" rel="noreferrer">
+          See Transaction&nbsp;
+          <svg aria-hidden="true"data-icon="external-link-alt" className="external-link" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="12"><path fill="#aaaaaa" d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"></path></svg>  
+        </a>
       </div>
     }
     if(mintError){
       return <div className="mintError">
         <svg aria-hidden="true" data-icon="times" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 352 512" width="100"><path d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"></path></svg>
+        <h2>Oops... Something went wrong!</h2>
       </div>
     }
   }
@@ -122,25 +127,29 @@ export default function Contract() {
           >
             <Form layout="vertical" name="mint">
               <h2>Your Address</h2>
-              <h3>{userAddress}</h3>
-              <Form.Item
-                label="How many NFTs do you want? (max. 10)"
-                name="_mintAmount"
-                required
-                style={{ marginTop: "25px", marginBottom: "15px" }}
-              >
-                <Input type="number" min="1" max="10" placeholder="Amount of NFTs to mint..." />
-              </Form.Item>
-              <Form.Item style={{ marginBottom: "5px" }}>
-                <Button
-                  type="primary"
-                  size="large"
-                  htmlType="submit"
-                  loading={responses["mint"]?.isLoading}
+              <Address avatar="left" copyable address={userAddress} size={8} />
+              <br/>
+              <h2>How many NFTs would you like? (max. 10)</h2>
+              <div className="minting-inputs">
+                <Form.Item
+                  label=""
+                  name="_mintAmount"
+                  required
+                  style={{ marginTop: "25px", marginBottom: "15px" }}
                 >
-                  {mintOn ? "Wait a moment..." : "MINT"}
-                </Button>
-              </Form.Item>
+                  <Input type="number" min="1" max="10" />
+                </Form.Item>
+                <Form.Item style={{ marginBottom: "5px" }}>
+                  <Button
+                    type="primary"
+                    size="large"
+                    htmlType="submit"
+                    loading={responses["mint"]?.isLoading}
+                  >
+                    {mintOn ? "Wait a moment..." : "MINT"}
+                  </Button>
+                </Form.Item>
+              </div>
             </Form>
           </Card>
 
