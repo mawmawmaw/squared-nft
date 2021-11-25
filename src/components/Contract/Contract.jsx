@@ -86,7 +86,7 @@ export default function Contract(props) {
   useEffect(()=>{
     setUserAddress(walletAddress);
   },[walletAddress])
-
+  
   return (
     <div className="minter-wrapper" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
       <Card
@@ -104,7 +104,12 @@ export default function Contract(props) {
           borderRadius: "0.5rem",
         }}
       >
-        {chainId==4 || <div className="wrong-network">To be able to mint, please connect to <strong>Rinkeby Testnet</strong>.</div>}
+        
+        {// eslint-disable-next-line
+        chainId==4 || 
+        <div className="wrong-network">To be able to mint, please connect to <strong>Rinkeby Testnet</strong>.</div>
+        }
+
         <div className="amount-minted"><h4>NFTs minted so far: {amountMinted + ' / ' + totalSupply}</h4></div>
         <Form.Provider
           onFormFinish={async (name, { forms }) => {
@@ -185,7 +190,9 @@ export default function Contract(props) {
                     size="large"
                     htmlType="submit"
                     loading={responses["mint"]?.isLoading}
-                    disabled={!mintOn&&chainId==4?false:true}
+                    disabled={// eslint-disable-next-line
+                      !mintOn&&chainId==4?false:true
+                    }
                   >
                     {mintOn ? "Minting..." : "MINT"}
                   </Button>

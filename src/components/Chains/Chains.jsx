@@ -36,6 +36,7 @@ function Chains() {
 
   useEffect(() => {
     if (!chainId) return null;
+    // eslint-disable-next-line
     const newSelected = menuItems.find((item) => item.key == 4);
     setSelected(newSelected);
     //console.log("current chainId: ", chainId);
