@@ -131,13 +131,13 @@ const App = () => {
                     <Col span={8}>
                       <Card bordered={false} cover={<img alt="metamask" src={metamask} />}>
                         <Meta title="1. Install Metamask" />
-                        <p>If you don't have <a href="https://metamask.io/" target="_blank">Metamask</a> installed, first <a href="https://metamask.io/" target="_blank">download it</a> and create an account. Be sure to keep your keys safe!</p>
+                        <p>If you don't have <a href="https://metamask.io/" target="_blank" rel="noreferrer">Metamask</a> installed, first <a href="https://metamask.io/" target="_blank">download it</a> and create an account. Be sure to keep your keys safe!</p>
                       </Card>
                     </Col>
                     <Col span={8}>
                       <Card bordered={false} cover={<img alt="ethereum" src={ethereum} />}>
                         <Meta title="2. Switch to Rinkeby" />
-                        <p>Switch to Rinkeby (Ethereum Testnet) and be sure to have some ETH. If you need ETH, please visit an ETH Faucet like: <a href="https://faucet.rinkeby.io/" target="_blank">Rinkeby Testnet Faucet</a></p>
+                        <p>Switch to Rinkeby (Ethereum Testnet) and be sure to have some ETH. If you need ETH, please visit an ETH Faucet like: <a href="https://faucet.rinkeby.io/" target="_blank" rel="noreferrer">Rinkeby Testnet Faucet</a></p>
                       </Card>
                     </Col>
                     <Col span={8}>

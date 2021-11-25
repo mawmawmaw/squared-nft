@@ -18,7 +18,7 @@ const Application = () => {
       <MoralisProvider appId={APP_ID} serverUrl={SERVER_URL}>
         <MoralisDappProvider>
           <div style={{backgroundImage: `url(${bg})`}}>
-          <App isServerInfo />
+            <App isServerInfo />
           </div>
         </MoralisDappProvider>
       </MoralisProvider>
