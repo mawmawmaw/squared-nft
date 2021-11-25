@@ -192,11 +192,11 @@ input#mint__mintAmount {
   header.ant-layout-header {
       flex-wrap: wrap;
       flex-direction: column;
-      justify-content: center;
-      align-items: center;
+      justify-content: center !important;
+      align-items: center !important;
   }
   ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light {
-    width: 38% !important;
+    width: 32% !important;
     margin-left: 0px !important;
   }
   li.ant-menu-overflow-item.ant-menu-overflow-item-rest.ant-menu-submenu.ant-menu-submenu-horizontal {
