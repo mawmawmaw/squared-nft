@@ -217,6 +217,13 @@ input#mint__mintAmount {
   p.header-address {
       font-size: 8px;
   }
+  .home h1 {
+      font-size: 18vw;
+      line-height: 20vw;
+  }
+  .home .ant-btn {
+      font-size: 20px;
+  }
   .minter-wrapper {
       width: 90vw !important;
       flex-direction: column;
