@@ -238,7 +238,28 @@ input#mint__mintAmount {
   margin: 0 auto;
 }
 
+.nft-list {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+
 @media screen and (max-width: 768px) {
+  @keyframes bgSlide {
+    0%{
+      background-position-x: 0%;
+      background-position-y: 0%;
+    }
+    100%{
+      background-position-x: 1000%;
+      background-position-y: 100%;
+    }
+  }
   header.ant-layout-header {
       flex-wrap: wrap;
       flex-direction: column;
@@ -249,8 +270,8 @@ input#mint__mintAmount {
     width: 60px;
   }
   ul.ant-menu-overflow.ant-menu.ant-menu-root.ant-menu-horizontal.ant-menu-light {
-    width: 32% !important;
-    margin-left: 0px !important;
+    width: 50% !important;
+    margin-left: 10px !important;
   }
   li.ant-menu-overflow-item.ant-menu-overflow-item-rest.ant-menu-submenu.ant-menu-submenu-horizontal {
       padding-left: 0;
@@ -258,10 +279,14 @@ input#mint__mintAmount {
   .ant-menu-item a {
       font-size: 12px;
   }
-  button.ant-btn.ant-dropdown-trigger span:first-of-type {
-      display: none;
+  button.ant-btn.ant-dropdown-trigger span:first-of-type, 
+  .chain-selector {
+    display: none;
   }
-  .auth-button {
+  p.auth-button {
+    background-color: #4c4c83;
+    color: white !important;
+    padding: 0 20px;
     font-size: 10px;
   }
   p.header-address {
@@ -270,6 +295,10 @@ input#mint__mintAmount {
   .home h1 {
       font-size: 18vw;
       line-height: 20vw;
+  }
+  .home h2.subtitle {
+    margin-top: 0px;
+    font-size: 6vw;
   }
   .home .ant-btn {
       font-size: 20px;
@@ -280,6 +309,9 @@ input#mint__mintAmount {
   }
   .minter-wrapper > div {
     width: 100% !important;
+  }
+  .ant-card-head-title {
+      font-size: 24px;
   }
   .ant-card-head-title p {
       font-size: 10px;

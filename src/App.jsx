@@ -18,6 +18,7 @@ import { Menu, Layout } from "antd";
 import "antd/dist/antd.css";
 import "./style.css";
 import Contract from "components/Contract/Contract";
+import Gallery from "components/Gallery/Gallery";
 const { Header } = Layout;
 
 const styles = {
@@ -87,13 +88,16 @@ const App = () => {
             <Menu.Item key="how">
               <NavLink to="/how-to">How to Mint</NavLink>
             </Menu.Item>
+            <Menu.Item key="gallery">
+              <NavLink to="/gallery">My Squares</NavLink>
+            </Menu.Item>
             <Menu.Item key="collection">
               <a href="https://testnets.opensea.io/collection/squarednft-6pfakr9a0f" target="_blank" rel="noreferrer">Collection</a>
             </Menu.Item>
 
           </Menu>
           <div style={styles.headerRight}>
-            <Chains />
+            <Chains/>
             <Account />
           </div>
         </Header>
@@ -119,8 +123,10 @@ const App = () => {
               </div>
             </Route>
             <Route path="/mint">
+              <>
               {isAuthenticated || <Redirect to="/" /> }
               <Contract isAuthenticated={isAuthenticated}/>
+              </>
             </Route>
             <Route path="/how-to">
               <div className="how-to-container" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
@@ -156,6 +162,13 @@ const App = () => {
                   </Row>
                 </Card>
               </div>
+            </Route>
+            
+            <Route path="/gallery">
+              <>
+              {isAuthenticated || <Redirect to="/" /> }
+              <Gallery isAuthenticated={isAuthenticated}/>
+              </>
             </Route>
             <Route path="/nonauthenticated">
               <>Please login using the "Authenticate" button</>

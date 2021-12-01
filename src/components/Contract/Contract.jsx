@@ -6,13 +6,14 @@ import Address from "components/Address/Address";
 import { useMoralis } from "react-moralis";
 
 export default function Contract(props) {
+  const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A";
+  const { abi } = contractInfo;
   const { isAuthenticated } = props;
   const { Moralis } = useMoralis();
   const { walletAddress, chainId } = useMoralisDapp();
-  const { abi } = contractInfo;
-  const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A";
   const [amountMinted, setAmountMinted] = useState(0);
   const [totalSupply, setTotalSupply] = useState(0);
+  const [contractOwnerAddress, setContractOwnerAddress] = useState("");
   const [userAddress, setUserAddress] = useState("");
   const [txId, setTxId] = useState("");
   const [responses, setResponses] = useState({});
@@ -50,6 +51,48 @@ export default function Contract(props) {
     }
   }
 
+  const isOwner = () => {
+    // eslint-disable-next-line
+    if(userAddress.toLowerCase() == contractOwnerAddress.toLowerCase()){
+      return <div id="admin-panel">
+        <Card
+          title={"Admin"}
+          size="large"
+          style={{
+            width: "100%",
+            boxShadow: "0 0.5rem 1.2rem rgb(189 197 209 / 20%)",
+            border: "1px solid #e7eaf3",
+            borderRadius: "0.5rem",
+          }}>
+            <Form.Provider
+              onFormFinish={async () => {
+                const options = {
+                  contractAddress,
+                  functionName: 'withdraw',
+                  abi,
+                };
+                Moralis.executeFunction(options).then((response) =>{
+                  console.log("Withdrawal Successful")
+                });
+
+              }}
+            >
+          <Form layout="vertical" name="withdraw">
+            <Button
+              type="primary"
+              size="large"
+              htmlType="submit"
+              loading={responses["withdraw"]?.isLoading}
+            >
+              Withdraw
+            </Button>
+          </Form>
+          </Form.Provider>
+          </Card>
+      </div>
+    }
+  }
+
   const openNotification = ({ message, description }) => {
     notification.open({
       placement: "bottomRight",
@@ -80,6 +123,14 @@ export default function Contract(props) {
       Moralis.executeFunction(options2).then((response) =>{
         setTotalSupply(response);
       });
+      const options3 = {
+        contractAddress,
+        functionName: 'owner',
+        abi,
+      };
+      Moralis.executeFunction(options3).then((response) =>{
+        setContractOwnerAddress(response);
+      });
     }
   });
 
@@ -88,134 +139,134 @@ export default function Contract(props) {
   },[walletAddress])
   
   return (
-    <div className="minter-wrapper" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
-      <Card
-        title={
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-            Mint a NFT
-            <Address avatar="left" copyable address={contractAddress} size={8} />
-          </div>
-        }
-        size="large"
-        style={{
-          width: "60%",
-          boxShadow: "0 0.5rem 1.2rem rgb(189 197 209 / 20%)",
-          border: "1px solid #e7eaf3",
-          borderRadius: "0.5rem",
-        }}
-      >
-        
-        {// eslint-disable-next-line
-        chainId==4 || 
-        <div className="wrong-network">To be able to mint, please connect to <strong>Rinkeby Testnet</strong>.</div>
-        }
-
-        <div className="amount-minted"><h4>NFTs minted so far: {amountMinted + ' / ' + totalSupply}</h4></div>
-        <Form.Provider
-          onFormFinish={async (name, { forms }) => {
-            setMintOn(true);
-            const params = forms[name].getFieldsValue();
-            params._to = userAddress;
-
-            let isView = false;
-
-            for (let method of abi) {
-              if (method.name !== name) continue;
-              if (method.stateMutability === "view") isView = true;
-            }
-
-            const options = {
-              contractAddress,
-              functionName: "mint",
-              abi,
-              params,
-              msgValue: Moralis.Units.ETH("0.05") * params._mintAmount
-            };
-
-            if (!isView) {
-              const tx = await Moralis.executeFunction({ awaitReceipt: false, ...options });
-              tx.on("transactionHash", (hash) => {
-                setResponses({ ...responses, [name]: { result: null, isLoading: true } });
-                openNotification({
-                  message: "Transaction Sent",
-                  description: `${hash}`,
-                });
-              })
-                .on("receipt", (receipt) => {
-                  setResponses({ ...responses, [name]: { result: null, isLoading: false } });
-                  openNotification({
-                    message: "Transaction Confirmed",
-                    description: `${receipt.transactionHash}`,
-                  });
-                  setTxId(receipt.transactionHash);
-                  setMintOn(false);
-                  setMintSuccess(true);
-                })
-                .on("error", (error) => {
-                  setMintErrorMsg(error.message);
-                  openNotification({
-                    message: "Transaction Error",
-                    description: `${error.message}`,
-                  });
-                  setMintOn(false);
-                  setMintSuccess(false);
-                  setMintError(true);
-                });
-            }
+    <>
+      <div className="minter-wrapper" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
+        <Card
+          title={
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              Mint a NFT
+              <Address avatar="left" copyable address={contractAddress} size={8} />
+            </div>
+          }
+          size="large"
+          style={{
+            width: "60%",
+            boxShadow: "0 0.5rem 1.2rem rgb(189 197 209 / 20%)",
+            border: "1px solid #e7eaf3",
+            borderRadius: "0.5rem",
           }}
         >
-          <Card
-            size="small"
-            style={{ marginBottom: "20px" }}
-          >
-            <Form layout="vertical" name="mint">
-              <h2>Your Address</h2>
-              <small>(this is where the NFT will be sent)</small>
-              <Address avatar="left" copyable size={8} />
-              <br/>
-              <h2>How many NFTs would you like? </h2>
-              <small>(Cost 0.05ETH each, Max. 10 per transaction)</small>
-              <div className="minting-inputs">
-                <Form.Item
-                  label=""
-                  name="_mintAmount"
-                  required
-                  style={{ marginTop: "25px", marginBottom: "15px" }}
-                >
-                  <Input type="number" value="1" min="1" max="10" />
-                </Form.Item>
-                <Form.Item style={{ marginBottom: "5px" }}>
-                  <Button
-                    type="primary"
-                    size="large"
-                    htmlType="submit"
-                    loading={responses["mint"]?.isLoading}
-                    disabled={// eslint-disable-next-line
-                      !mintOn&&chainId==4?false:true
-                    }
-                  >
-                    {mintOn ? "Minting..." : "MINT"}
-                  </Button>
-                </Form.Item>
-              </div>
-            </Form>
-          </Card>
+          {// eslint-disable-next-line
+          chainId==4 || 
+          <div className="wrong-network">To be able to mint, please connect to <strong>Rinkeby Testnet</strong>.</div>
+          }
+          <div className="amount-minted"><h4>NFTs minted so far: {amountMinted + ' / ' + totalSupply}</h4></div>
+          <Form.Provider
+            onFormFinish={async (name, { forms }) => {
+              setMintOn(true);
+              const params = forms[name].getFieldsValue();
+              params._to = userAddress;
 
-        </Form.Provider>
-      </Card>
-      <Card
-        title={"Transaction Status"}
-        size="large"
-        style={{
-          width: "40%",
-          boxShadow: "0 0.5rem 1.2rem rgb(189 197 209 / 20%)",
-          border: "1px solid #e7eaf3",
-          borderRadius: "0.5rem",
-        }}
-      >
-        { renderedResult() }
-        
-      </Card>
-    </div>
+              let isView = false;
+
+              for (let method of abi) {
+                if (method.name !== name) continue;
+                if (method.stateMutability === "view") isView = true;
+              }
+
+              const options = {
+                contractAddress,
+                functionName: "mint",
+                abi,
+                params,
+                msgValue: Moralis.Units.ETH("0.05") * params._mintAmount
+              };
+
+              if (!isView) {
+                const tx = await Moralis.executeFunction({ awaitReceipt: false, ...options });
+                tx.on("transactionHash", (hash) => {
+                  setResponses({ ...responses, [name]: { result: null, isLoading: true } });
+                  openNotification({
+                    message: "Transaction Sent",
+                    description: `${hash}`,
+                  });
+                })
+                  .on("receipt", (receipt) => {
+                    setResponses({ ...responses, [name]: { result: null, isLoading: false } });
+                    openNotification({
+                      message: "Transaction Confirmed",
+                      description: `${receipt.transactionHash}`,
+                    });
+                    console.log(receipt);
+                    setTxId(receipt.transactionHash);
+                    setMintOn(false);
+                    setMintSuccess(true);
+                  })
+                  .on("error", (error) => {
+                    setMintErrorMsg(error.message);
+                    openNotification({
+                      message: "Transaction Error",
+                      description: `${error.message}`,
+                    });
+                    setMintOn(false);
+                    setMintSuccess(false);
+                    setMintError(true);
+                  });
+              }
+            }}
+          >
+            <Card
+              size="small"
+              style={{ marginBottom: "20px" }}
+            >
+              <Form layout="vertical" name="mint">
+                <h2>Your Address</h2>
+                <small>(this is where the NFT will be sent)</small>
+                <Address avatar="left" copyable size={8} />
+                <br/>
+                <h2>How many NFTs would you like? </h2>
+                <small>(Cost 0.05ETH each, Max. 10 per transaction)</small>
+                <div className="minting-inputs">
+                  <Form.Item
+                    label=""
+                    name="_mintAmount"
+                    required
+                    style={{ marginTop: "25px", marginBottom: "15px" }}
+                  >
+                    <Input type="number" value="1" min="1" max="10" />
+                  </Form.Item>
+                  <Form.Item style={{ marginBottom: "5px" }}>
+                    <Button
+                      type="primary"
+                      size="large"
+                      htmlType="submit"
+                      loading={responses["mint"]?.isLoading}
+                      disabled={// eslint-disable-next-line
+                        !mintOn&&chainId==4?false:true
+                      }
+                    >
+                      {mintOn ? "Minting..." : "MINT"}
+                    </Button>
+                  </Form.Item>
+                </div>
+              </Form>
+            </Card>
+          </Form.Provider>
+        </Card>
+        <Card
+          title={"Transaction Status"}
+          size="large"
+          style={{
+            width: "40%",
+            boxShadow: "0 0.5rem 1.2rem rgb(189 197 209 / 20%)",
+            border: "1px solid #e7eaf3",
+            borderRadius: "0.5rem",
+          }}
+        >
+          { renderedResult() }
+        </Card>
+        { isOwner() }
+      </div>
+    </>
   );
 }
