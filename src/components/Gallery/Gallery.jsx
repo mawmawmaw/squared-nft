@@ -3,7 +3,7 @@ import { Card } from "antd";
 import { useEffect, useState } from "react";
 import contractInfo from "contracts/SquaredNFT_abi.json";
 import { useMoralis } from "react-moralis";
-import NftList from './NftList';
+import NftListView from './NftListView';
 
 export default function Gallery(props) {
     
@@ -34,10 +34,10 @@ export default function Gallery(props) {
     return (
             <Card 
             style={{ marginTop: "25", width: "50vw", borderRadius: "8px" }}
-            title={"Gallery"}
+            title={`Gallery (${nftList[0]?.length})`}
             size="large"
             >
-                <NftList list={nftList}/>
+                <NftListView list={nftList} nftSize={200}/>
             </Card>
     )
 }

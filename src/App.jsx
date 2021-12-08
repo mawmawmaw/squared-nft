@@ -19,6 +19,7 @@ import "antd/dist/antd.css";
 import "./style.css";
 import Contract from "components/Contract/Contract";
 import Gallery from "components/Gallery/Gallery";
+import Mixer from "components/Mixer/Mixer";
 const { Header } = Layout;
 
 const styles = {
@@ -90,6 +91,9 @@ const App = () => {
             </Menu.Item>
             <Menu.Item key="gallery">
               <NavLink to="/gallery">My Squares</NavLink>
+            </Menu.Item>
+            <Menu.Item key="mixer">
+              <NavLink to="/mixer">NFT Mixer</NavLink>
             </Menu.Item>
             <Menu.Item key="collection">
               <a href="https://testnets.opensea.io/collection/squarednft-6pfakr9a0f" target="_blank" rel="noreferrer">Collection</a>
@@ -168,6 +172,12 @@ const App = () => {
               <>
               {isAuthenticated || <Redirect to="/" /> }
               <Gallery isAuthenticated={isAuthenticated}/>
+              </>
+            </Route>
+            <Route path="/mixer">
+              <>
+              {isAuthenticated || <Redirect to="/" /> }
+              <Mixer isAuthenticated={isAuthenticated}/>
               </>
             </Route>
             <Route path="/nonauthenticated">

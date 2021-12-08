@@ -64,6 +64,7 @@ select {
 }
 .app-wrapper{
   animation: bgSlide 180s linear 0s infinite;
+  background: linear-gradient(to right,#3b4260 0%,#401d3b 100%), linear-gradient(to top,#070a0e 0%,rgba(7,10,14,0.45) 43.35%,rgba(7,10,14,0.1) 77.34%,rgba(7,10,14,0) 100%);
 }
 @keyframes bgSlide {
   0%{
@@ -248,6 +249,38 @@ input#mint__mintAmount {
   gap: 10px;
 }
 
+div#mixer-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.nft-list > .nft {
+  cursor: pointer;
+}
+.mixer-options {
+  display: flex;
+  justify-content: space-between;
+  margin: 10px 0;
+}
+div#clear-selection, div#get-selection {
+  cursor: pointer;
+  text-align: center;
+  color: white;
+  padding: 4px 20px;
+  border-radius: 4px;
+}
+div#get-selection{
+  background: #2605df63;
+}
+div#get-selection:hover {
+  background: #2605df93;
+}
+div#clear-selection{
+  background: #cc000099;
+}
+div#clear-selection:hover {
+  background: #cc0000bb;
+}
 
 @media screen and (max-width: 768px) {
   @keyframes bgSlide {
