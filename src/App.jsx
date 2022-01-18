@@ -10,7 +10,7 @@ import {
 import { Button, Card, Row, Col } from "antd";
 import headerLogo from './assets/logo.png';
 import metamask from './assets/metamask.png';
-import ethereum from './assets/ethereum.png';
+import avalanche from './assets/avalanche.png';
 import authenticate from './assets/authenticate.png';
 import Account from "components/Account";
 import Chains from "components/Chains";
@@ -95,9 +95,6 @@ const App = () => {
             <Menu.Item key="mixer">
               <NavLink to="/mixer">NFT Mixer</NavLink>
             </Menu.Item>
-            <Menu.Item key="collection">
-              <a href="https://testnets.opensea.io/collection/squarednft-6pfakr9a0f" target="_blank" rel="noreferrer">Collection</a>
-            </Menu.Item>
 
           </Menu>
           <div style={styles.headerRight}>
@@ -152,9 +149,9 @@ const App = () => {
                       </Card>
                     </Col>
                     <Col className="gutter-row" span={8}>
-                      <Card bordered={false} cover={<img alt="ethereum" src={ethereum} />}>
-                        <Meta title="2. Switch to Rinkeby" />
-                        <p>Switch to Rinkeby (Ethereum Testnet) and be sure to have some ETH. If you need ETH, please visit an ETH Faucet like: <a href="https://faucet.rinkeby.io/" target="_blank" rel="noreferrer">Rinkeby Testnet Faucet</a></p>
+                      <Card bordered={false} cover={<img alt="avalanche" src={avalanche} />}>
+                        <Meta title="2. Switch to Fuji Testnet" />
+                        <p>Switch to Fuji (Avalanche Testnet) and be sure to have some Test AVAX. If you need some, please visit an AVAX Faucet like: <a href="https://faucet.avax-test.network/" target="_blank" rel="noreferrer">Fuji Avalanche Testnet Faucet</a></p>
                       </Card>
                     </Col>
                     <Col className="gutter-row" span={8}>

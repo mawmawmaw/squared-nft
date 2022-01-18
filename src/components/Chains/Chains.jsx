@@ -3,7 +3,7 @@ import useChain from "hooks/useChain";
 import { useMoralisDapp } from "providers/MoralisDappProvider/MoralisDappProvider";
 import { Menu, Dropdown, Button } from "antd";
 import { DownOutlined } from "@ant-design/icons";
-import { ETHLogo } from "./Logos";
+import { AvaxLogo } from "./Logos";
 
 const styles = {
   item: {
@@ -23,9 +23,9 @@ const styles = {
 
 const menuItems = [
   {
-    key: "0x4",
-    value: "Rinkeby Testnet",
-    icon: <ETHLogo />,
+    key: "43113",
+    value: "Fuji Testnet",
+    icon: <AvaxLogo />,
   }
 ];
 
@@ -37,7 +37,7 @@ function Chains() {
   useEffect(() => {
     if (!chainId) return null;
     // eslint-disable-next-line
-    const newSelected = menuItems.find((item) => item.key == 4);
+    const newSelected = menuItems.find((item) => item.key == 43113);
     setSelected(newSelected);
     //console.log("current chainId: ", chainId);
   }, [chainId]);

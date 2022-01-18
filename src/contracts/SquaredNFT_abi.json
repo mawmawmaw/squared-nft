@@ -1,6 +1,17 @@
-{
-    "contractName": "SquaredNFT",
-    "abi": [
+[
+	{
+		"inputs": [
+			{
+				"internalType": "bool",
+				"name": "_state",
+				"type": "bool"
+			}
+		],
+		"name": "activateWhitelist",
+		"outputs": [],
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
 	{
 		"inputs": [
 			{
@@ -674,6 +685,19 @@
 		"type": "function"
 	},
 	{
+		"inputs": [],
+		"name": "whitelist",
+		"outputs": [
+			{
+				"internalType": "bool",
+				"name": "",
+				"type": "bool"
+			}
+		],
+		"stateMutability": "view",
+		"type": "function"
+	},
+	{
 		"inputs": [
 			{
 				"internalType": "address",
@@ -692,15 +716,4 @@
 		"stateMutability": "view",
 		"type": "function"
 	}
-    ],
-    "networks": {
-        "1337": {
-          "events": {},
-          "links": {
-            "ConvertLib": "0x25AF99b922857C37282f578F428CB7f34335B379"
-          },
-          "address": "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A",
-          "transactionHash": "0x490f46a073422592e1817807719f98b3c918cebcdabf17682933642ca7a4a9dd"
-        }
-      }
-}
+]

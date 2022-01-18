@@ -1,14 +1,13 @@
 import { useMoralisDapp } from "providers/MoralisDappProvider/MoralisDappProvider";
 import { Card } from "antd";
 import { useEffect, useState } from "react";
-import contractInfo from "contracts/SquaredNFT_abi.json";
+import abi from "contracts/SquaredNFT_abi.json";
 import { useMoralis } from "react-moralis";
 import NftList from './NftList';
 
 export default function Mixer(props) {
     
-    const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A";
-    const { abi } = contractInfo;
+    const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
     const { Moralis } = useMoralis();
     const { isAuthenticated } = props;
     const { walletAddress } = useMoralisDapp();

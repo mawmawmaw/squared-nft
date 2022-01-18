@@ -1,13 +1,13 @@
 import { useMoralisDapp } from "providers/MoralisDappProvider/MoralisDappProvider";
 import { Button, Card, Input, Form, notification } from "antd";
 import { useState, useEffect } from "react";
-import contractInfo from "contracts/SquaredNFT_abi.json";
+import abi from "contracts/SquaredNFT_abi.json";
 import Address from "components/Address/Address";
 import { useMoralis } from "react-moralis";
 
 export default function Contract(props) {
-  const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A";
-  const { abi } = contractInfo;
+  // const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A"; //RInkeby
+const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
   const { isAuthenticated } = props;
   const { Moralis } = useMoralis();
   const { walletAddress, chainId } = useMoralisDapp();
@@ -33,7 +33,7 @@ export default function Contract(props) {
         <svg aria-hidden="true" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>
         <br/>
         <h2>Successful!</h2>
-        <a href={`https://rinkeby.etherscan.io/tx/${txId}`} target="_blank" rel="noreferrer">
+        <a href={`https://testnet.snowtrace.io/tx/${txId}`} target="_blank" rel="noreferrer">
           See Transaction&nbsp;
           <svg aria-hidden="true"data-icon="external-link-alt" className="external-link" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="12"><path fill="#aaaaaa" d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"></path></svg>  
         </a>
@@ -157,7 +157,7 @@ export default function Contract(props) {
           }}
         >
           {// eslint-disable-next-line
-          chainId==4 || 
+          chainId==43113 || 
           <div className="wrong-network">To be able to mint, please connect to <strong>Rinkeby Testnet</strong>.</div>
           }
           <div className="amount-minted"><h4>NFTs minted so far: {amountMinted + ' / ' + totalSupply}</h4></div>
@@ -179,7 +179,7 @@ export default function Contract(props) {
                 functionName: "mint",
                 abi,
                 params,
-                msgValue: Moralis.Units.ETH("0.05") * params._mintAmount
+                msgValue: Moralis.Units.ETH("1") * params._mintAmount
               };
 
               if (!isView) {
@@ -225,7 +225,7 @@ export default function Contract(props) {
                 <Address avatar="left" copyable size={8} />
                 <br/>
                 <h2>How many NFTs would you like? </h2>
-                <small>(Cost 0.05ETH each, Max. 10 per transaction)</small>
+                <small>(Cost 1AVAX each, Max. 5 per transaction)</small>
                 <div className="minting-inputs">
                   <Form.Item
                     label=""
@@ -242,7 +242,7 @@ export default function Contract(props) {
                       htmlType="submit"
                       loading={responses["mint"]?.isLoading}
                       disabled={// eslint-disable-next-line
-                        !mintOn&&chainId==4?false:true
+                        !mintOn&&chainId==43113?false:true
                       }
                     >
                       {mintOn ? "Minting..." : "MINT"}
