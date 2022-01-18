@@ -1,14 +1,13 @@
 import { useMoralisDapp } from "providers/MoralisDappProvider/MoralisDappProvider";
 import { Button, Card, Input, Form, notification } from "antd";
 import { useState, useEffect } from "react";
+import { NavLink } from "react-router-dom";
 import abi from "contracts/SquaredNFT_abi.json";
-import Address from "components/Address/Address";
 import { useMoralis } from "react-moralis";
-
+const nftPrice = "1";
 export default function Contract(props) {
-  // const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A"; //RInkeby
-const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
-  const { isAuthenticated } = props;
+  const whitelist = true;
+  const { isAuthenticated, contractAddress } = props;
   const { Moralis } = useMoralis();
   const { walletAddress, chainId } = useMoralisDapp();
   const [amountMinted, setAmountMinted] = useState(0);
@@ -33,6 +32,14 @@ const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
         <svg aria-hidden="true" data-icon="check" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100"><path d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"></path></svg>
         <br/>
         <h2>Successful!</h2>
+        
+        <Button
+          type="primary"
+          size="large"
+        >
+          <NavLink to="/gallery">See my NFT</NavLink>
+        </Button>
+        <br/>
         <a href={`https://testnet.snowtrace.io/tx/${txId}`} target="_blank" rel="noreferrer">
           See Transaction&nbsp;
           <svg aria-hidden="true"data-icon="external-link-alt" className="external-link" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="12"><path fill="#aaaaaa" d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"></path></svg>  
@@ -145,7 +152,7 @@ const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
           title={
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
               Mint a NFT
-              <Address avatar="left" copyable address={contractAddress} size={8} />
+              <div className="amount-minted"><h4>NFTs minted so far: {amountMinted + ' / ' + totalSupply}</h4></div>
             </div>
           }
           size="large"
@@ -158,9 +165,13 @@ const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
         >
           {// eslint-disable-next-line
           chainId==43113 || 
-          <div className="wrong-network">To be able to mint, please connect to <strong>Rinkeby Testnet</strong>.</div>
+          <div className="wrong-network">To be able to mint, please connect to <strong>Fuji Testnet</strong>.</div>
           }
-          <div className="amount-minted"><h4>NFTs minted so far: {amountMinted + ' / ' + totalSupply}</h4></div>
+          
+          {// eslint-disable-next-line
+          whitelist!=true || 
+          <div className="whitelist-active">Whitelist is active at the moment. Only people who registered will be able to mint.</div>
+          }
           <Form.Provider
             onFormFinish={async (name, { forms }) => {
               setMintOn(true);
@@ -179,7 +190,7 @@ const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
                 functionName: "mint",
                 abi,
                 params,
-                msgValue: Moralis.Units.ETH("1") * params._mintAmount
+                msgValue: Moralis.Units.ETH(nftPrice) * params._mintAmount
               };
 
               if (!isView) {
@@ -203,6 +214,8 @@ const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
                     setMintSuccess(true);
                   })
                   .on("error", (error) => {
+                    setResponses({ ...responses, [name]: { result: null, isLoading: false } });
+                    console.log(error);
                     setMintErrorMsg(error.message);
                     openNotification({
                       message: "Transaction Error",
@@ -220,10 +233,6 @@ const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
               style={{ marginBottom: "20px" }}
             >
               <Form layout="vertical" name="mint">
-                <h2>Your Address</h2>
-                <small>(this is where the NFT will be sent)</small>
-                <Address avatar="left" copyable size={8} />
-                <br/>
                 <h2>How many NFTs would you like? </h2>
                 <small>(Cost 1AVAX each, Max. 5 per transaction)</small>
                 <div className="minting-inputs">

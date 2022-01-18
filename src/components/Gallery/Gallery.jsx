@@ -7,9 +7,8 @@ import NftListView from './NftListView';
 
 export default function Gallery(props) {
     
-  const contractAddress = "0xa9f303345C5AA19c2d6deA070E53f5f7809D2B85";
   const { Moralis } = useMoralis();
-    const { isAuthenticated } = props;
+  const { isAuthenticated, contractAddress } = props;
     const { walletAddress } = useMoralisDapp();
     const [nftList, setNftList] = useState([]);
 
@@ -33,7 +32,7 @@ export default function Gallery(props) {
     return (
             <Card 
             style={{ marginTop: "25", width: "50vw", borderRadius: "8px" }}
-            title={`Gallery (${nftList[0]?.length})`}
+            title={`Gallery (${ nftList[0]?.length ? nftList[0]?.length : "0"})`}
             size="large"
             >
                 <NftListView list={nftList} nftSize={200}/>

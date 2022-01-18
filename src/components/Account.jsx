@@ -14,13 +14,13 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    width: "fit-content",
+    width: "180px",
     borderRadius: "12px",
-    backgroundColor: "rgb(244, 244, 244)",
+    backgroundColor: "rgb(244, 124, 125)",
     cursor: "pointer",
   },
   text: {
-    color: "#21BF96",
+    color: "#fff",
   },
 };
 
@@ -35,7 +35,7 @@ function Account() {
         style={styles.account}
         onClick={() => authenticate({ signingMessage: "Welcome to Squared NFTs!" })}
       >
-        <p className="auth-button" style={styles.text}>Authenticate</p>
+        <p className="auth-button" style={styles.text}>Connect Wallet</p>
       </div>
     );
   }

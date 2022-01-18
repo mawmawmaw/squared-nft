@@ -130,6 +130,7 @@ header.ant-layout-header {
 }
 .amount-minted h4 {
   text-align: right;
+  font-size: 12px;
 }
 label.ant-form-item-required {
   font-size: 21px;
@@ -147,7 +148,20 @@ label.ant-form-item-required {
   border-radius: 4px;
   animation: pulse 1s ease-in-out 0s infinite forwards;
 }
-
+.whitelisted {
+  background: white;
+  padding: 40px 60px;
+  border-radius: 4px;
+}
+.whitelist-active {
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  background-color: rgb(111 142 227);
+  color: white;
+  border-radius: 4px;
+  animation: pulse 1s ease-in-out 0s infinite forwards;
+}
 @keyframes pulse {
   0%{
     transform: scale(1);

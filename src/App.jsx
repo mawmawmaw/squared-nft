@@ -13,12 +13,14 @@ import metamask from './assets/metamask.png';
 import avalanche from './assets/avalanche.png';
 import authenticate from './assets/authenticate.png';
 import Account from "components/Account";
+import Address from "components/Address/Address";
 import { Menu, Layout } from "antd";
 import "antd/dist/antd.css";
 import "./style.css";
 import Contract from "components/Contract/Contract";
 import Gallery from "components/Gallery/Gallery";
 import Mixer from "components/Mixer/Mixer";
+import Whitelist from "components/Whitelist/Whitelist";
 const { Header } = Layout;
 
 const styles = {
@@ -52,6 +54,8 @@ const styles = {
   },
 };
 const App = () => {
+  // const contractAddress = "0xbdda1Fe95B0E43Ca80Fae4EF03268373e0e3779A"; //RInkeby
+  const contractAddress = "0xb097718DdE248b35485114661d437f0B0bDE40fD"; //Fuji
   const { Meta } = Card;
   const { isWeb3Enabled, enableWeb3, isAuthenticated, isWeb3EnableLoading } =
     useMoralis();
@@ -85,11 +89,11 @@ const App = () => {
             <Menu.Item key="mint" disabled={isAuthenticated ? false : true}>
               <NavLink to="/mint">Mint</NavLink>
             </Menu.Item>
+            <Menu.Item key="gallery" disabled={isAuthenticated ? false : true}>
+              <NavLink to="/gallery">My Squares</NavLink>
+            </Menu.Item>
             <Menu.Item key="how">
               <NavLink to="/how-to">FAQ</NavLink>
-            </Menu.Item>
-            <Menu.Item key="gallery">
-              <NavLink to="/gallery">My Squares</NavLink>
             </Menu.Item>
 
           </Menu>
@@ -102,7 +106,13 @@ const App = () => {
             <Route path="/" exact>
               <div className="home">
                 <h1>Squared NFT</h1>
-                <h2 className="subtitle"></h2>
+                <Button
+                  type="primary"
+                  size="large"
+                  disabled={isAuthenticated ? false : true}
+                >
+                  <NavLink to="/whitelist">Whitelist</NavLink>
+                </Button>
                 <Button
                   type="primary"
                   size="large"
@@ -118,16 +128,22 @@ const App = () => {
                 </Button>
               </div>
             </Route>
+            <Route path="/whitelist">
+              <>
+              {isAuthenticated || <Redirect to="/" /> }
+              <Whitelist isAuthenticated={isAuthenticated} contractAddress={contractAddress}/>
+              </>
+            </Route>
             <Route path="/mint">
               <>
               {isAuthenticated || <Redirect to="/" /> }
-              <Contract isAuthenticated={isAuthenticated}/>
+              <Contract isAuthenticated={isAuthenticated} contractAddress={contractAddress}/>
               </>
             </Route>
             <Route path="/how-to">
               <div className="how-to-container" style={{ margin: "auto", display: "flex", gap: "20px", marginTop: "25", width: "50vw" }}>
                 <Card
-                  title="How to Mint a NFT"
+                  title="FAQ"
                   size="large"
                   style={{
                     width: "100%",
@@ -136,6 +152,11 @@ const App = () => {
                     borderRadius: "0.5rem",
                   }}
                 >
+                  
+                  <h2>What is the Contract Address?</h2>
+                  <Address avatar="left" copyable address={contractAddress} size={8} />
+                  <br/>
+                  <h2>How to Mint a NFT</h2>
                   <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     <Col className="gutter-row" span={8}>
                       <Card bordered={false} cover={<img alt="metamask" src={metamask} />}>
@@ -163,13 +184,13 @@ const App = () => {
             <Route path="/gallery">
               <>
               {isAuthenticated || <Redirect to="/" /> }
-              <Gallery isAuthenticated={isAuthenticated}/>
+              <Gallery isAuthenticated={isAuthenticated} contractAddress={contractAddress}/>
               </>
             </Route>
             <Route path="/mixer">
               <>
               {isAuthenticated || <Redirect to="/" /> }
-              <Mixer isAuthenticated={isAuthenticated}/>
+              <Mixer isAuthenticated={isAuthenticated} contractAddress={contractAddress}/>
               </>
             </Route>
             <Route path="/nonauthenticated">

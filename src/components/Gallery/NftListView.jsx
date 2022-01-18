@@ -9,12 +9,16 @@ const NftListView = (props) => {
                 </div>
         )
     })
+    if(props.list[0]?.length>0){
+        return <>
+                <div className="nft-list">
+                    {renderedNftList}
+                </div>
+                </>
+    }else{
+        return <span>You have no Squared NFTs yet...</span>
+    }
     
-    return <>
-        <div className="nft-list">
-            {renderedNftList}
-        </div>
-        </>
 }
 
 export default NftListView;
