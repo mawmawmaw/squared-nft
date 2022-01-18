@@ -64,7 +64,7 @@ select {
 }
 .app-wrapper{
   animation: bgSlide 180s linear 0s infinite;
-  background: linear-gradient(to right,#3b4260 0%,#401d3b 100%), linear-gradient(to top,#070a0e 0%,rgba(7,10,14,0.45) 43.35%,rgba(7,10,14,0.1) 77.34%,rgba(7,10,14,0) 100%);
+  background-color: #fff;
 }
 @keyframes bgSlide {
   0%{

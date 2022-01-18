@@ -13,7 +13,6 @@ import metamask from './assets/metamask.png';
 import avalanche from './assets/avalanche.png';
 import authenticate from './assets/authenticate.png';
 import Account from "components/Account";
-import Chains from "components/Chains";
 import { Menu, Layout } from "antd";
 import "antd/dist/antd.css";
 import "./style.css";
@@ -84,21 +83,17 @@ const App = () => {
               <NavLink to="/">Home</NavLink>
             </Menu.Item>
             <Menu.Item key="mint" disabled={isAuthenticated ? false : true}>
-              <NavLink to="/mint">Mint NFT</NavLink>
+              <NavLink to="/mint">Mint</NavLink>
             </Menu.Item>
             <Menu.Item key="how">
-              <NavLink to="/how-to">How to Mint</NavLink>
+              <NavLink to="/how-to">FAQ</NavLink>
             </Menu.Item>
             <Menu.Item key="gallery">
               <NavLink to="/gallery">My Squares</NavLink>
             </Menu.Item>
-            <Menu.Item key="mixer">
-              <NavLink to="/mixer">NFT Mixer</NavLink>
-            </Menu.Item>
 
           </Menu>
           <div style={styles.headerRight}>
-            <Chains/>
             <Account />
           </div>
         </Header>
@@ -107,7 +102,7 @@ const App = () => {
             <Route path="/" exact>
               <div className="home">
                 <h1>Squared NFT</h1>
-                <h2 className="subtitle">NFT Puzzle Game</h2>
+                <h2 className="subtitle"></h2>
                 <Button
                   type="primary"
                   size="large"
